@@ -43,8 +43,9 @@ void E();
 void E1();
 void T();
 void T1();
+void P();
+void P1();
 void F();
-void F1();
 
 
 // E1 ☞ E'
@@ -78,13 +79,12 @@ void E1(){
             {
                 ind++;
             }
-            
         }
     }
 }
 
 void T(){
-    F();
+    P();
     T1();
 }
 
@@ -92,7 +92,7 @@ void T1(){
         // enter the first status
     if(input[ind]=='*'){
         ind++;
-        F();
+        P();
         // record
         res[res_i]='*';
         res_i++;
@@ -101,7 +101,7 @@ void T1(){
         if (input[ind]=='/')
         {
             ind++;
-            F();
+            P();
             // record
             res[res_i]='/';
             res_i++;
@@ -116,9 +116,25 @@ void T1(){
     }
 }
 
+void P(){
+    F();
+    P1();
+}
+
+void P1(){
+    if (input[ind]=='^'){
+        ind++;
+        F();
+        res[res_i]='^';
+        res_i++;
+        P1();
+    }
+}
+
 void F(){
     if (input[ind]=='(')
     {
+        ind++;
         E();
     }else{
         // offset is the number's length
@@ -130,12 +146,11 @@ void F(){
             ind++;
         }
     }
-    
 }
 
 int main(int argc, char const *argv[])
 {
-    input="12-4/3";
+    input="(30-4)^5/3";
     E();
     puts(res);
     return 0;
